@@ -2,6 +2,8 @@ const Sequelize = require('sequelize')
 const config = require('config')
 
 const instancia = new Sequelize(
+    // Forma direta:
+
     // 'petshop', //nome do banco de dados
     // 'root', // usuario do banco de dados
     // '123456', // senha
@@ -10,7 +12,7 @@ const instancia = new Sequelize(
     //     dialect: 'mysql',
 
     // }
-
+    
     config.get('mysql.banco-de-dados'),
     config.get('mysql.usuario'),
     config.get('mysql.senha'),
