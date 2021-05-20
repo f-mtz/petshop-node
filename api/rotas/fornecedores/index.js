@@ -15,22 +15,43 @@ roteador.post('/', async (requisicao, resposta) => {
     await fornecedor.criar()
     resposta.send(
         JSON.stringify(fornecedor)
-        )
+    )
 })
 
 roteador.get('/:idFornecedor', async (requisicao, resposta) => {
-    
+
     try {
         const id = requisicao.params.idFornecedor
-        const fornecedor = new Fornecedor({id: id})
+        const fornecedor = new Fornecedor({ id: id })
         await fornecedor.carregar()
 
         resposta.send(JSON.stringify(fornecedor))
     } catch (erro) {
         resposta.send(
             JSON.stringify({
-            mensagem : erro.message
-        }))
+                mensagem: erro.message
+            }))
+    }
+})
+
+roteador.put('/:idFornecedor', async (requisicao, resposta) => {
+
+    try {
+        const id = requisicao.params.idFornecedor
+        const dadosRecebidos = requisicao.body
+
+        // A linha abaixo serge para juntar em um objeto só
+        const dados = Object.assign({}, dadosRecebidos, { id: id })
+        const fornecedor = new Fornecedor(dados)
+        await fornecedor.atualizar()
+        resposta.end()
+
+    }
+    catch (erro) {
+        resposta.send(JSON.stringify({
+            mensagem: erro.message
+        })
+        )
     }
 })
 

@@ -35,6 +35,30 @@ class Fornecedor {
         this.versao = encontrado.versao
     }
 
+    async atualizar() {
+        await TabelaFornecedor.pegarPorId(this.id)
+        // Definindo os compos que poderam ser gerenciados pelo usuário 
+        //(datas e versoes são gerenciados pelo MSQL nesse caso)
+        const campos = ['empresa', 'email', 'categoria']
+        const dadosParaAtualizar = {}
+
+        campos.forEach((campo) => {
+            const valor = this[campo]
+            // valida se o campo é uma String e se não é vazio
+            // se passar na validacao, é atribuido aos dados a serem atualizados
+            if(typeof valor === 'string' && valor.length > 0) {
+                dadosParaAtualizar[campo] = valor
+            }
+        })
+
+        if(Object.keys(dadosParaAtualizar).length === 0) {
+            throw new Error('Não foram fornecidos dados para atualizar')
+        }
+
+        await TabelaFornecedor.atualizar(this.id, dadosParaAtualizar)
+
+    }
+
 }
 
 module.exports = Fornecedor
