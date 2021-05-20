@@ -59,6 +59,10 @@ class Fornecedor {
 
     }
 
+    remover() {
+        return TabelaFornecedor.remover(this.id)
+    }
+
 }
 
 module.exports = Fornecedor

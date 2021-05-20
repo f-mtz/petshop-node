@@ -18,7 +18,7 @@ module.exports = {
         })
 
         if(!encontrado) {
-            throw new Error('Forncedor não encontrado')
+            throw new Error('Fornecedor não encontrado')
         }
 
         return encontrado
@@ -31,5 +31,13 @@ module.exports = {
                 where: { id: id }
             })
 
+    },
+
+    async remover(id) {
+        return Modelo.destroy({
+            where: {
+                id: id
+            }
+        })
     }
 }
