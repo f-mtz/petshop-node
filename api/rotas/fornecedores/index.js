@@ -22,6 +22,7 @@ roteador.post('/', async (requisicao, resposta) => {
         )
     }
     catch (erro) {
+        resposta.status(400)
         resposta.send(
             JSON.stringify({
                 mensagem: erro.message
@@ -40,6 +41,7 @@ roteador.get('/:idFornecedor', async (requisicao, resposta) => {
         resposta.status(200)
         resposta.send(JSON.stringify(fornecedor))
     } catch (erro) {
+        resposta.status(404)
         resposta.send(
             JSON.stringify({
                 mensagem: erro.message
@@ -62,6 +64,7 @@ roteador.put('/:idFornecedor', async (requisicao, resposta) => {
 
     }
     catch (erro) {
+        resposta.status(400)
         resposta.send(JSON.stringify({
             mensagem: erro.message
         })
@@ -79,6 +82,7 @@ roteador.delete('/:idFornecedor', async (requisicao, resposta) => {
         resposta.status(204)
         resposta.end()
     } catch (erro) {
+        resposta.status(404)
         resposta.send(
             JSON.stringify({
                 mensagem: erro.message
