@@ -50,7 +50,7 @@ roteador.get('/:idFornecedor', async (requisicao, resposta) => {
     }
 })
 
-roteador.put('/:idFornecedor', async (requisicao, resposta) => {
+roteador.put('/:idFornecedor', async (requisicao, resposta, erroHTTP) => {
 
     try {
         const id = requisicao.params.idFornecedor
@@ -65,18 +65,7 @@ roteador.put('/:idFornecedor', async (requisicao, resposta) => {
 
     }
     catch (erro) {
-        if(erro instanceof NaoEncontrado) {
-            resposta.status(404)
-        }
-
-        else {
-        resposta.status(400)
-        }
-        resposta.send(JSON.stringify({
-            mensagem: erro.message,
-            id: erro.idErro
-        })
-        )
+        erroHTTP(erro)
     }
 })
 
