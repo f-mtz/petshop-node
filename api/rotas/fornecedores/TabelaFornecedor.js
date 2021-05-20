@@ -1,5 +1,6 @@
 const Modelo = require('./ModeloTabelaFornecedor')
 
+// Esse módulo é responsável por renomear os métodos de acesso ao banco (até então)
 module.exports = {
     listar() {
         return Modelo.findAll()
@@ -7,5 +8,19 @@ module.exports = {
 
     inserir(fornecedor) {
         return Modelo.create(fornecedor)
+    },
+
+    async pegarPorId(id) {
+        const encontrado = await Modelo.findOne({
+            where: {
+                id: id
+            }
+        })
+
+        if(!encontrado) {
+            throw new Error('Forncedor não encontrado')
+        }
+
+        return encontrado
     }
 }

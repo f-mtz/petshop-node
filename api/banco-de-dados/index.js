@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize')
 const config = require('config')
 
+// Esse módulo basicamente associa as strings de conexão do banco a uma instancia do Sequelize
 const instancia = new Sequelize(
     // Forma direta:
 

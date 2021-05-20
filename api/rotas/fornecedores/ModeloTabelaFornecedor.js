@@ -1,5 +1,7 @@
 const Sequelize = require('sequelize')
 const instancia = require('../../banco-de-dados')
+
+// Esse módulo basicamente é um modelo de representação de uma tabela no banco
 const colunas = {
     "empresa": {
         type: Sequelize.STRING,
