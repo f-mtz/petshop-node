@@ -1,5 +1,5 @@
 const Modelo = require('./ModeloTabelaFornecedor')
-
+const NaoEncontrado = require('../../erros/NaoEncontrado')
 // Esse módulo é responsável por renomear os métodos de acesso ao banco (até então)
 module.exports = {
     listar() {
@@ -18,7 +18,7 @@ module.exports = {
         })
 
         if(!encontrado) {
-            throw new Error('Fornecedor não encontrado')
+            throw new NaoEncontrado()
         }
 
         return encontrado

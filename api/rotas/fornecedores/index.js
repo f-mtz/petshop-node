@@ -1,6 +1,7 @@
 const roteador = require('express').Router()
 const TabelaFornecedor = require('./TabelaFornecedor')
 const Fornecedor = require('./Fornecedor')
+const NaoEncontrado = require('../../erros/NaoEncontrado')
 
 // Vai exibir o Ok direto no navegador
 roteador.get('/', async (requisicao, resposta) => {
@@ -64,9 +65,16 @@ roteador.put('/:idFornecedor', async (requisicao, resposta) => {
 
     }
     catch (erro) {
+        if(erro instanceof NaoEncontrado) {
+            resposta.status(404)
+        }
+
+        else {
         resposta.status(400)
+        }
         resposta.send(JSON.stringify({
-            mensagem: erro.message
+            mensagem: erro.message,
+            id: erro.idErro
         })
         )
     }
