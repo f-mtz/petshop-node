@@ -6,6 +6,8 @@ const config = require('config')
 const NaoEncontrado = require('./erros/NaoEncontrado')
 const CampoInvalido = require('./erros/CampoInvalido')
 const DadosNaoFornecidos = require('./erros/DadosNaoFornecidos')
+const ValorNaoSuportado = require('./erros/ValorNaoSuportado')
+
 
 //Para trabalhar com JSON
 app.use(bodyParser.json())
@@ -23,6 +25,10 @@ app.use((erro, requisicao, resposta, erroHTTP) => {
 
     if (erro instanceof CampoInvalido || erro instanceof DadosNaoFornecidos) {
         status = 400
+    }
+
+    if(erro instanceof ValorNaoSuportado) {
+        status = 406
     }
 
     resposta.status(status)
