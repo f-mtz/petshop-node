@@ -3,7 +3,7 @@ const NaoEncontrado = require('../../erros/NaoEncontrado')
 // Esse módulo é responsável por renomear os métodos de acesso ao banco (até então)
 module.exports = {
     listar() {
-        return Modelo.findAll()
+        return Modelo.findAll({ raw: true })
     },
 
     inserir(fornecedor) {
