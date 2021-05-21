@@ -1,7 +1,7 @@
 const roteador = require('express').Router()
 const TabelaFornecedor = require('./TabelaFornecedor')
 const Fornecedor = require('./Fornecedor')
-const NaoEncontrado = require('../../erros/NaoEncontrado')
+
 
 // Vai exibir o Ok direto no navegador
 roteador.get('/', async (requisicao, resposta) => {
@@ -11,7 +11,7 @@ roteador.get('/', async (requisicao, resposta) => {
 })
 
 
-roteador.post('/', async (requisicao, resposta) => {
+roteador.post('/', async (requisicao, resposta, erroHTTP) => {
     
     try {
         const dadosRecebidos = requisicao.body
@@ -23,16 +23,11 @@ roteador.post('/', async (requisicao, resposta) => {
         )
     }
     catch (erro) {
-        resposta.status(400)
-        resposta.send(
-            JSON.stringify({
-                mensagem: erro.message
-            })
-        )
+        erroHTTP(erro)
     }
 })
 
-roteador.get('/:idFornecedor', async (requisicao, resposta) => {
+roteador.get('/:idFornecedor', async (requisicao, resposta, erroHTTP) => {
 
     try {
         const id = requisicao.params.idFornecedor
@@ -42,11 +37,7 @@ roteador.get('/:idFornecedor', async (requisicao, resposta) => {
         resposta.status(200)
         resposta.send(JSON.stringify(fornecedor))
     } catch (erro) {
-        resposta.status(404)
-        resposta.send(
-            JSON.stringify({
-                mensagem: erro.message
-            }))
+        erroHTTP(erro)
     }
 })
 
@@ -69,7 +60,7 @@ roteador.put('/:idFornecedor', async (requisicao, resposta, erroHTTP) => {
     }
 })
 
-roteador.delete('/:idFornecedor', async (requisicao, resposta) => {
+roteador.delete('/:idFornecedor', async (requisicao, resposta, erroHTTP) => {
     try {
 
         const id = requisicao.params.idFornecedor
@@ -79,12 +70,7 @@ roteador.delete('/:idFornecedor', async (requisicao, resposta) => {
         resposta.status(204)
         resposta.end()
     } catch (erro) {
-        resposta.status(404)
-        resposta.send(
-            JSON.stringify({
-                mensagem: erro.message
-            })
-        )
+       erroHTTP(erro)
     }
 })
 
