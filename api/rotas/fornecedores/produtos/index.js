@@ -57,14 +57,36 @@ roteador.get('/:id', async (requisicao, resposta, erroHTTP) => {
         const serializador = new Serializador(
             resposta.getHeader('Content-Type'),
             ['preco', 'estoque', 'fornecedor', 'dataCriacao', 'dataAtualizacao', 'versao']
-            )
+        )
 
         resposta.send(
-           serializador.serializar(produto)
+            serializador.serializar(produto)
         )
 
     } catch (erro) {
 
+        erroHTTP(erro)
+
+    }
+})
+
+roteador.put('/:id', async (requisicao, resposta, erroHTTP) => {
+    try {
+        const dados = Object.assign(
+            {},
+            requisicao.body,
+            {
+                id: requisicao.params.id,
+                fornecedor: requisicao.fornecedor.id
+            }
+        )
+
+        const produto = new Produto(dados)
+        await produto.atualizar()
+        resposta.status(204)
+        resposta.end()
+    }
+    catch (erro) {
         erroHTTP(erro)
 
     }
