@@ -8,15 +8,20 @@ roteador.get('/', async (requisicao, resposta) => {
     )
 })
 
-roteador.post('/', async (requisicao, resposta) => {
-    const idFornecedor = requisicao.params.idFornecedor
-    const corpo = requisicao.body
-    const dados = Object.assign({}, corpo, { fornecedor: idFornecedor })
-    const produto = new Produto(dados)
-    await produto.criar()
+roteador.post('/', async (requisicao, resposta, erroHTTP) => {
+    try {
+        const idFornecedor = requisicao.params.idFornecedor
+        const corpo = requisicao.body
+        const dados = Object.assign({}, corpo, { fornecedor: idFornecedor })
+        const produto = new Produto(dados)
+        await produto.criar()
 
-    resposta.status(201)
-    resposta.send(produto)
+        resposta.status(201)
+        resposta.send(produto)
+    } catch (erro) {
+        erroHTTP(erro)
+
+    }
 })
 
 roteador.delete('/:id', async (requisicao, resposta) => {
