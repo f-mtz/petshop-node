@@ -37,4 +37,24 @@ roteador.delete('/:id', async (requisicao, resposta) => {
 
 })
 
+roteador.get('/:id', async (requisicao, resposta, erroHTTP) => {
+    try {
+        const dados = {
+            id: requisicao.params.id,
+            fornecedor: requisicao.fornecedor.id
+        }
+
+        const produto = new Produto(dados)
+        await produto.carregar()
+        resposta.send(
+            JSON.stringify(produto)
+        )
+
+    } catch (erro) {
+
+        erroHTTP(erro)
+
+    }
+})
+
 module.exports = roteador
