@@ -3,6 +3,15 @@ const TabelaFornecedor = require('./TabelaFornecedor')
 const Fornecedor = require('./Fornecedor')
 const SerializadorFornecedor = require('../../Serializador').SerializadorFornecedor
 
+// Define as operações HTTP que podem ser executadas a partir do '/' 
+// por meio do navegador e outras aplicações
+roteador.options('/', (requisicao, resposta) => {
+    resposta.set('Access-Control-Allow-Methods', 'GET, POST')
+    resposta.set('Access-Control-Allow-Headers', 'Content-Type')
+    resposta.status(204)
+    resposta.end()
+})
+
 // Vai exibir o Ok direto no navegador
 roteador.get('/', async (requisicao, resposta) => {
     const resultados = await TabelaFornecedor.listar()
@@ -33,6 +42,13 @@ roteador.post('/', async (requisicao, resposta, erroHTTP) => {
     catch (erro) {
         erroHTTP(erro)
     }
+})
+
+roteador.options('/:idFornecedor', (requisicao, resposta) => {
+    resposta.set('Access-Control-Allow-Methods', 'GET, PUT, DELETE')
+    resposta.set('Access-Control-Allow-Headers', 'Content-Type')
+    resposta.status(204)
+    resposta.end()
 })
 
 roteador.get('/:idFornecedor', async (requisicao, resposta, erroHTTP) => {
