@@ -78,6 +78,31 @@ roteador.get('/:id', async (requisicao, resposta, erroHTTP) => {
     }
 })
 
+roteador.head('/:id', async (requisicao, resposta, erroHTTP) => {
+    
+    try {
+        const dados = {
+            id: requisicao.params.id,
+            fornecedor: requisicao.fornecedor.id
+        }
+
+        const produto = new Produto(dados)
+        await produto.carregar()
+        
+        resposta.set('ETag', produto.versao)
+        const timestamps = (new Date(produto.dataAtualizacao)).getTime()
+        resposta.set('Last-Modified', timestamps)
+
+        resposta.status(200)
+        resposta.end()
+    } catch (erro) {
+
+        erroHTTP(erro)
+
+    }
+
+})
+
 roteador.put('/:id', async (requisicao, resposta, erroHTTP) => {
     try {
         const dados = Object.assign(
