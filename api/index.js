@@ -41,6 +41,9 @@ app.use((requisicao, resposta, erroHTTP) => {
 const roteador = require('./rotas/fornecedores')
 app.use('/api/fornecedores', roteador)
 
+const roteadorV2 = require('./rotas/fornecedores/rotas.v2')
+app.use('/api/v2/fornecedores', roteadorV2)
+
 
 app.use((erro, requisicao, resposta, erroHTTP) => {
     let status = 500
@@ -71,3 +74,8 @@ app.use((erro, requisicao, resposta, erroHTTP) => {
 app.listen(config.get('api.porta'), () => {
     console.log('API está funcionando')
 })
+
+// version X.Y.Z, 
+// X representa uma mudança que requer alterações de código e muda a forma de usar a nossa API (MAJOR)
+// Y representa acrescimo de funcionalidades (MINOR)
+// Z representa correcao de BUG's (PATCH)
