@@ -30,6 +30,13 @@ app.use((requisicao, resposta, proximaRota) => {
     proximaRota()
 })
 
+// Permitindo que outras aplicações use nossa API, o * significa any URL, 
+//se fosse uma apenas bateria passar o URL raiz
+app.use((requisicao, resposta, erroHTTP) => {
+    resposta.set('Access-Control-Allow-Origin', '*')
+    erroHTTP()
+})
+
 // Trazendo as rotas para a aplicação
 const roteador = require('./rotas/fornecedores')
 app.use('/api/fornecedores', roteador)
